@@ -1,140 +1,150 @@
-Machine Learning Pipeline for Predicting Right Ventricular Dysfunction in Acute Pulmonary Embolism
-A complete end‑to‑end machine learning workflow for preprocessing, resampling, model training, evaluation, visualization, and feature analysis in a clinical dataset of pulmonary embolism patients.
+# Machine Learning–Based Prediction of Right Ventricular Dysfunction in Acute Pulmonary Embolism
 
-📌 Project Overview
-This repository contains a fully implemented Python pipeline for predicting right ventricular dysfunction (RVD) in acute pulmonary embolism using multiple machine learning classifiers. The workflow includes:
+A complete, reproducible machine learning pipeline for predicting **Right Ventricular Dysfunction (RVD)** in **Acute Pulmonary Embolism** using multiple machine learning models.  
+Includes full preprocessing, resampling, training, evaluation, and visualization.
 
-Data cleaning, preprocessing, and feature scaling
-Handling class imbalance with SMOTE
-Training six ML models
-Full evaluation using ROC, PR, cross‑validation, confusion matrices
-Feature importance analysis (tree‑based + coefficients)
-Calibration curves
-Cox proportional hazards modeling
-Automatic export of performance tables and visualizations
-The project serves as a reproducible research tool for healthcare professionals, ML engineers, and clinical researchers.
+---
 
-🧬 Dataset
-The script uses a dataset named:
+## 📌 Project Overview
 
-text
-Pulmonary_Embolism_data_set.csv
-Expected structure:
+This repository implements an end-to-end workflow for:
 
-Rows: patient cases
-Columns: clinical or paraclinical features
-Final column: binary target variable (RVD = 1, No RVD = 0)
-Missing numeric values are automatically imputed with column medians.
+- Data preprocessing and feature scaling  
+- Class imbalance handling using **SMOTE**  
+- Training and evaluating **six ML models**  
+- Model comparison via ROC, PR, and cross-validation  
+- Feature importance and correlation analysis  
+- Cox regression for clinical risk factors  
 
-Two new files are generated:
+The goal is to identify reliable predictors of RVD using open-source tools.
 
-text
-train_set.csv  
+---
+
+## 🧬 Dataset
+
+Expected file: `Pulmonary_Embolism_data_set.csv`
+
+Each row = patient record  
+Each column = clinical or paraclinical feature  
+Final column = binary target (RVD = 1, no-RVD = 0)
+
+During execution, the script also generates:
+train_set.csv
 test_set.csv
 
-🧠 Machine Learning Models Implemented
-The code evaluates a comprehensive suite of commonly used ML classifiers:
+---
 
-Logistic Regression
-Random Forest
-Support Vector Machine (SVM, probability enabled)
-Decision Tree
-XGBoost
-Neural Network (MLPClassifier, 64‑32 hidden layers)
-All models are:
+## 🧠 Machine Learning Models Implemented
 
-Trained on SMOTE‑balanced training data
-Evaluated on the original imbalanced test set
-Assessed with 5‑fold Stratified K‑Fold cross‑validation
-⚙️ Pipeline Summary
+- Logistic Regression  
+- Random Forest  
+- Support Vector Machine (SVM)  
+- Decision Tree  
+- XGBoost  
+- Neural Network (MLPClassifier)
+
+
+---
+
+## ⚙️ Pipeline Summary
 1. Preprocessing
 Median imputation
 Train/test split (80/20, stratified)
 StandardScaler applied to all features
 SMOTE applied only to training data
+
 2. Model Training
 Each model is:
-
 Trained on SMOTE‑resampled data
 Evaluated with:
+
 Training metrics (original scale)
+
 Test metrics
+
 5‑fold CV metrics
-Metrics include:
 
-AUC
-Sensitivity
-Specificity
-Precision
-Confusion matrix (TP, TN, FP, FN)
-3. Model Evaluation Outputs
-The script saves:
+Metrics computed for each model:
 
-Confusion matrices (confusion_<model>.png)
-Feature importances (tree‑based models)
-ROC curves for all models (roc_curves.png)
-Precision‑Recall curves (pr_curve.png)
-Calibration curve for the best model
-Correlation heatmap (heatmap.png)
-A full metrics table (model_performance.csv)
-Additionally:
+| Metric | Description |
+| ------- | ------------ |
+| AUC | Area Under ROC Curve |
+| Sensitivity | True positive rate |
+| Specificity | True negative rate |
+| Precision | Positive predictive value |
+| Confusion Matrix | TP, TN, FP, FN counts |
 
-Best model selected based on highest test AUC
-Top 10 features printed (via coefficients or importances)
+---
 
-📊 Cox Regression Analysis
-The script includes a Cox proportional hazards model using:
+## 📈 Visualizations Generated
 
-Dummy duration = 1
-Outcome = target column
-It prints the top 10 most significant predictors ranked by p‑value, offering additional clinical insight beyond ML.
+Key outputs automatically saved in the working directory:
+confusion_<model>.png
 
-📈 Visualizations Generated
-The following plots are automatically saved:
+feature_importance_<model>.png
 
-ROC curves for all models
-Precision–Recall curves for all models
-Confusion matrix for each classifier
-Feature importance bar plots (tree models)
-Full correlation heatmap
-Calibration curve for the best model
-These figures appear in the working directory as PNG files.
+roc_curves.png
 
-📁 File Structure
-text
-├── Pulmonary_Embolism_data_set.csv
-├── train_set.csv
-├── test_set.csv
-├── confusion_<model>.png
-├── feature_importance_<model>.png
-├── heatmap.png
-├── roc_curves.png
-├── pr_curve.png
-├── calibration_curve.png
-├── model_performance.csv
-├── your_script.py  (or whatever filename you choose)
-└── README.md
-📦 Requirements
-Install dependencies:
+pr_curve.png
 
-text
-pip install pandas numpy scikit-learn xgboost seaborn lifelines imbalanced-learn matplotlib
+heatmap.png
+
+calibration_curve.png
+
+model_performance.csv
+
+
+---
+
+## 📊 Cox Regression Analysis
+
+A Cox proportional hazards model is included to identify independent predictors of RVD.  
+Important covariates are ranked by significance (p-values), providing interpretability alongside ML results.
+
+---
+
+## 📦 Installation and Requirements
+
+Clone the repository and install the dependencies:
+```bash
+git clone https://github.com/YOUR_USERNAME/your-repo-name.git
+cd your-repo-name
+pip install -r requirements.txt
+```
 ▶️ Usage
-Run the script with:
+Run the analysis:
+```bash
+python analysis.py
+```
 
-text
-python your_script.py
-Outputs will be generated automatically in the current folder.
+All plots and CSV outputs will appear in the project directory.
 
-🧪 Reproducibility Notes
-All random processes use random_state=42
-Stratification ensures identical class distribution in train/test
-SMOTE is applied only to training data
-Cross‑validation is performed on SMOTE data
-Evaluation on test set uses original class imbalance (realistic clinical setting)
+Reproducibility Details
+Random seed fixed (random_state=42)
+Stratified train/test split (80/20)
+SMOTE applied only to training data
+Cross-validation performed on SMOTE data
+Test set evaluation uses original class proportions
+## 📁 File Structure
+```
+├── analysis.py
+├── Pulmonary_Embolism_data_set.csv
+├── README.md
+├── requirements.txt
+├── LICENSE
+├── .gitignore
+└── (generated outputs)
+```
+## License
+This project is licensed under the MIT License – see LICENSE for details.
 
-📜 Citation
-If you use this code in academic work, please cite this repository and acknowledge the pipeline’s contribution to your analysis.
+## 📜 Citation
+If you use this repository for academic work, please cite:
 
-🤝 Contributions
-Feel free to open issues, report bugs, or submit pull requests to improve model performance or extend the pipeline (e.g., SHAP values, hyperparameter tuning, additional models).
+[Pooya Eini]. Machine Learning–Based Prediction of Right Ventricular Dysfunction in Acute Pulmonary Embolism. 2026. 
+GitHub repository:github.com/pooyaeini/Right-Ventricular-Dysfunction-in-Acute-Pulmonary-Embolism
+
+## 🤝 Contributions
+Pull requests are welcome!
+
+Open an issue to suggest improvements or new models.
