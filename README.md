@@ -130,7 +130,6 @@ Test set evaluation uses original class proportions
 ## 📁 File Structure
 ```
 ├── analysis.py
-├── Pulmonary_Embolism_data_set.csv
 ├── README.md
 ├── requirements.txt
 ├── LICENSE
