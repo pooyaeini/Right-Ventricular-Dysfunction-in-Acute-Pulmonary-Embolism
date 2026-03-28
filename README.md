@@ -3,6 +3,8 @@
 A complete, reproducible machine learning pipeline for predicting **Right Ventricular Dysfunction (RVD)** in **Acute Pulmonary Embolism** using multiple machine learning models.  
 Includes full preprocessing, resampling, training, evaluation, and visualization.
 
+
+We utilized a publicly available dataset for this study, accessible at [https://data.mendeley.com/datasets/bm4v4rzdyd/1]. 
 ---
 
 ## 📌 Project Overview
